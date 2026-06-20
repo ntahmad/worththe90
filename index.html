@@ -194,7 +194,13 @@ async function rate(id,n){
     alert("This match is not linked to Supabase yet.");
     return;
   }
-const voteKey = "worththe90_voted_" + id;
+const match = matches.find(m => m.id === id);
+
+if (match && new Date() < new Date(match.kickoffUtc)) {
+  alert("Voting opens after kickoff.");
+  return;
+}  
+  const voteKey = "worththe90_voted_" + id;
 
 if (localStorage.getItem(voteKey)) {
   alert("You already voted on this match.");
