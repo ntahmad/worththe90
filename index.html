@@ -158,6 +158,7 @@ matches = dbMatches.map(m => ({
   homeCode: m.home_code,
   awayCode: m.away_code
 }));
+    matches.sort((a,b) => new Date(a.kickoffUtc) - new Date(b.kickoffUtc));
     const dbRatings = await supabaseFetch("ratings?select=match_id,rating");
     const idToSlug = Object.fromEntries(Object.entries(matchDbIds).map(([slug, id]) => [String(id), slug]));
     ratingCache = {};
