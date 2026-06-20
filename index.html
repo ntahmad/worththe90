@@ -119,11 +119,7 @@ const SUPABASE_HEADERS = {
 
 // Static display metadata for now. Supabase is the source of truth for ratings.
 // The "id" here matches the "slug" column in Supabase.
-const matches = [
- {id:"can-qatar",kickoffUtc:"2026-06-18T22:00:00Z",competition:"World Cup - Group B",home:"Canada",away:"Qatar",homeFlag:"🇨🇦",awayFlag:"🇶🇦",homeCode:"ca",awayCode:"qa",videos:[{label:"Highlights",youtubeId:"dQw4w9WgXcQ"},{label:"Extended Highlights",youtubeId:"dQw4w9WgXcQ"}]},
- {id:"mex-kor",kickoffUtc:"2026-06-19T01:00:00Z",competition:"World Cup - Group A",home:"Mexico",away:"South Korea",homeFlag:"🇲🇽",awayFlag:"🇰🇷",homeCode:"mx",awayCode:"kr",videos:[{label:"Highlights",youtubeId:"dQw4w9WgXcQ"}]},
- {id:"bra-arg",kickoffUtc:"2026-06-19T00:00:00Z",competition:"World Cup",home:"Brazil",away:"Argentina",homeFlag:"🇧🇷",awayFlag:"🇦🇷",homeCode:"br",awayCode:"ar",videos:[{label:"Highlights",youtubeId:"dQw4w9WgXcQ"}]}
-];
+let matches = [];
 
 let matchDbIds = {};
 let ratingCache = {};
@@ -148,12 +144,20 @@ async function supabaseFetch(path, options = {}) {
 
 async function loadSupabaseData() {
   try {
-    const dbMatches = await supabaseFetch("matches?select=id,slug");
+    const dbMatches = await supabaseFetch("matches");
     matchDbIds = {};
     dbMatches.forEach(m => {
       if (m.slug) matchDbIds[m.slug] = m.id;
     });
-
+matches = dbMatches.map(m => ({
+  id: m.slug,
+  kickoffUtc: m.kickoff_utc,
+  competition: m.competition,
+  home: m.home_team,
+  away: m.away_team,
+  homeCode: m.home_code,
+  awayCode: m.away_code
+}));
     const dbRatings = await supabaseFetch("ratings?select=match_id,rating");
     const idToSlug = Object.fromEntries(Object.entries(matchDbIds).map(([slug, id]) => [String(id), slug]));
     ratingCache = {};
