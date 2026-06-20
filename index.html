@@ -194,14 +194,19 @@ async function rate(id,n){
     alert("This match is not linked to Supabase yet.");
     return;
   }
+const voteKey = "worththe90_voted_" + id;
 
+if (localStorage.getItem(voteKey)) {
+  alert("You already voted on this match.");
+  return;
+}
   try {
     await supabaseFetch("ratings", {
       method: "POST",
       headers: { Prefer: "return=minimal" },
       body: JSON.stringify({ match_id: matchId, rating: n })
     });
-
+localStorage.setItem(voteKey, "1");
     await loadSupabaseData();
     render();
 
