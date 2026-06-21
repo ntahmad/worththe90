@@ -156,7 +156,10 @@ matches = dbMatches.map(m => ({
   home: m.home_team,
   away: m.away_team,
   homeCode: m.home_code,
-  awayCode: m.away_code
+  awayCode: m.away_code,
+  highlightsUrl: m.highlights_url,
+  highlightsVideoId: m.highlights_video_id,
+  highlightsSource: m.highlights_source
 }));
     matches.sort((a,b) => new Date(a.kickoffUtc) - new Date(b.kickoffUtc));
     const dbRatings = await supabaseFetch("ratings?select=match_id,rating");
