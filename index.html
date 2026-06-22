@@ -31,6 +31,64 @@ button{border:1px solid #cbd5e1;background:#fff;color:#111827;border-radius:999p
   flex:0 0 auto;
   background:#fff;
 }
+.layout-with-calendar{
+  display:flex;
+  gap:20px;
+  align-items:flex-start;
+}
+
+.calendar-nav{
+  width:180px;
+  position:sticky;
+  top:90px;
+  flex-shrink:0;
+}
+
+.matches-area{
+  flex:1;
+}
+
+.calendar-card{
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:16px;
+  padding:14px;
+  box-shadow:0 10px 28px rgba(15,23,42,.08);
+}
+
+.calendar-title{
+  font-weight:900;
+  margin-bottom:10px;
+  color:#334155;
+}
+
+.calendar-date{
+  display:block;
+  padding:8px 10px;
+  margin-bottom:6px;
+  border-radius:10px;
+  text-decoration:none;
+  color:#111827;
+  font-weight:700;
+}
+
+.calendar-date:hover{
+  background:#f1f5f9;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+@media (max-width:900px){
+  .layout-with-calendar{
+    display:block;
+  }
+
+  .calendar-nav{
+    display:none;
+  }
+}  
 .match-flag-img{
   width:34px;
   height:24px;
@@ -75,7 +133,11 @@ button{border:1px solid #cbd5e1;background:#fff;color:#111827;border-radius:999p
 
 <main class="container">
   <div class="guide-float"><button class="guide-btn" onclick="openGuide()">See Rating Guide</button></div>
-  <section id="home"></section>
+
+  <div class="layout-with-calendar">
+    <aside id="calendarNav" class="calendar-nav"></aside>
+    <section id="home" class="matches-area"></section>
+  </div>
 </main>
 
 <div class="overlay" id="playerOverlay" onclick="closePlayerIfOutside(event)">
@@ -190,7 +252,43 @@ function info(id){const r=ratings(id),a=avg(r);return{ratings:r,count:r.length,a
 function breakdown(id){const r=ratings(id),total=r.length,counts={};for(let i=1;i<=10;i++)counts[i]=0;r.forEach(n=>counts[n]++);return "<strong>Vote breakdown</strong>"+[10,9,8,7,6,5,4,3,2,1].map(n=>{const p=total?Math.round(counts[n]/total*100):0;return `<div class="bar-row"><span>${n}</span><div class="bar"><div style="width:${p}%"></div></div><strong>${p}%</strong></div>`}).join("")}
 function flagImg(code,name,cls="flag-img"){return `<img class="${cls}" src="https://flagcdn.com/w80/${code}.png" alt="${name} flag" loading="lazy">`}
 function card(m){const i=info(m.id),score=i.count?`⭐ <strong>${i.avg.toFixed(1)} / 10</strong> · ${i.count} votes`:"No ratings yet";return `<article class="card"><div class="competition">${m.competition}</div><div class="kickoff">Kickoff: ${fmtTime(m.kickoffUtc)}</div><div class="teams"><div class="team-row">${flagImg(m.homeCode,m.home)}<span>${m.home}</span></div><div class="vs">vs</div><div class="team-row">${flagImg(m.awayCode,m.away)}<span>${m.away}</span></div></div><div class="actions"><button class="action primary" onclick="openPlayer('${m.id}')">▶ Watch Spoiler-Free</button><button class="action" onclick="toggle('rating-${m.id}')">📊 Reveal Community Rating</button><button class="action" onclick="toggle('vote-${m.id}')">🗳 Vote After Watching</button></div><div class="hidden-box" id="rating-${m.id}"><span class="tag ${i.s.cls}">${i.s.label}</span><div class="score">${score}</div><p class="note">${i.s.detail}</p></div><div class="hidden-box" id="vote-${m.id}"><strong>Rate the full match experience</strong><p class="note">Please rate the match itself, not the result or the team you support.</p><span class="guide-link" onclick="openGuide()">View rating guide</span><div class="rate-buttons">${[1,2,3,4,5,6,7,8,9,10].map(n=>`<button onclick="rate('${m.id}',${n})">${n}</button>`).join("")}</div><div class="results">${breakdown(m.id)}</div></div></article>`}
-function render(){const grouped={};matches.slice().sort((a,b)=>new Date(a.kickoffUtc)-new Date(b.kickoffUtc)).forEach(m=>{const d=fmtDate(m.kickoffUtc);(grouped[d] ||= []).push(m)});document.getElementById("home").innerHTML=Object.entries(grouped).map(([d,items])=>`<h2 class="date">${d}</h2><div class="grid">${items.map(card).join("")}</div>`).join("")}
+function dateIdFromUtc(utc){
+  return "date-" + new Date(utc).toISOString().slice(0,10);
+}
+
+function render(){
+  const grouped={};
+
+  matches
+    .slice()
+    .sort((a,b)=>new Date(a.kickoffUtc)-new Date(b.kickoffUtc))
+    .forEach(m=>{
+      const d=fmtDate(m.kickoffUtc);
+      (grouped[d] ||= []).push(m);
+    });
+
+  document.getElementById("home").innerHTML=Object.entries(grouped).map(([d,items])=>{
+    const id=dateIdFromUtc(items[0].kickoffUtc);
+    return `<h2 class="date" id="${id}">${d}</h2><div class="grid">${items.map(card).join("")}</div>`;
+  }).join("");
+
+  renderCalendar();
+}
+function renderCalendar(){
+  const host=document.getElementById("calendarNav");
+  if(!host)return;
+
+  const dates=[...new Set(matches.map(m=>new Date(m.kickoffUtc).toISOString().slice(0,10)))].sort();
+
+  host.innerHTML=`<div class="calendar-card">
+    <div class="calendar-title">Dates</div>
+    ${dates.map(d=>{
+      const dt=new Date(d+"T12:00:00");
+      const label=dt.toLocaleDateString(undefined,{month:"short",day:"numeric"});
+      return `<a class="calendar-date" href="#date-${d}">${label}</a>`;
+    }).join("")}
+  </div>`;
+}  
 function toggle(id){document.getElementById(id).classList.toggle("visible")}
 
 async function rate(id,n){
