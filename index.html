@@ -223,7 +223,13 @@ matches = [...new Map(dbMatches.map(m => [m.slug, {
   awayCode: m.away_code,
   highlightsUrl: m.highlights_url,
   highlightsVideoId: m.highlights_video_id,
-  highlightsSource: m.highlights_source
+  highlightsSource: m.highlights_source,
+
+  usVideoId: m.us_video_id,
+  gbVideoId: m.gb_video_id,
+  seVideoId: m.se_video_id,
+  nlVideoId: m.nl_video_id,
+  fallbackVideoId: m.fallback_video_id
 }])).values()];
     matches.sort((a,b) => new Date(a.kickoffUtc) - new Date(b.kickoffUtc));
     const dbRatings = await supabaseFetch("ratings?select=match_id,rating");
@@ -350,6 +356,7 @@ function streamMessage(country){
     US: "Recommended in your region: FOX Sports / official US coverage",
     GB: "Recommended in your region: BBC / ITV coverage",
     SE: "Recommended in your region: SVT coverage",
+    NL: "Recommended in your region: NOS coverage",
     AU: "Recommended in your region: SBS coverage",
     CA: "Recommended in your region: TSN / CTV coverage",
     PK: "Recommended in your region: PTV Sports"
@@ -371,7 +378,12 @@ async function openPlayer(id){
 
   const country = await getVisitorCountry();
   const regionalMessage = streamMessage(country);
-
+  const videoId =
+  country === "US" ? m.usVideoId :
+  country === "GB" ? m.gbVideoId :
+  country === "SE" ? m.seVideoId :
+  country === "NL" ? m.nlVideoId :
+  m.fallbackVideoId || m.highlightsVideoId;
   document.getElementById("curtainHost").innerHTML = `
     <div class="split-curtain">
       <div class="split-flag" style="--flag-img:url('https://flagcdn.com/w1280/${m.homeCode}.png')"></div>
@@ -408,12 +420,12 @@ async function openPlayer(id){
     </div>
 
     ${
-      m.highlightsVideoId
+      videoId
         ? `<div class="tabs">
              <button class="active">${m.highlightsSource || "Highlights"}</button>
            </div>
            <div class="video-wrap">
-             <iframe id="player" src="https://www.youtube.com/embed/${m.highlightsVideoId}" title="Spoiler-free football highlights" frameborder="0" allowfullscreen></iframe>
+             <iframe id="player" src="https://www.youtube.com/embed/${videoId}" title="Spoiler-free football highlights" frameborder="0" allowfullscreen></iframe>
            </div>`
         : `<div class="video-wrap" style="padding:24px;color:white;text-align:center">Highlights not available yet. Check back soon.</div>`
     }
