@@ -213,7 +213,7 @@ async function loadSupabaseData() {
     dbMatches.forEach(m => {
       if (m.slug) matchDbIds[m.slug] = m.id;
     });
-matches = dbMatches.map(m => ({
+matches = [...new Map(dbMatches.map(m => [m.slug, {
   id: m.slug,
   kickoffUtc: m.kickoff_utc,
   competition: m.competition,
@@ -224,7 +224,7 @@ matches = dbMatches.map(m => ({
   highlightsUrl: m.highlights_url,
   highlightsVideoId: m.highlights_video_id,
   highlightsSource: m.highlights_source
-}));
+}])).values()];
     matches.sort((a,b) => new Date(a.kickoffUtc) - new Date(b.kickoffUtc));
     const dbRatings = await supabaseFetch("ratings?select=match_id,rating");
     const idToSlug = Object.fromEntries(Object.entries(matchDbIds).map(([slug, id]) => [String(id), slug]));
