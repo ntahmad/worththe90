@@ -362,7 +362,7 @@ function streamMessage(country){
     PK: "Recommended in your region: PTV Sports"
   };
 
-  return map[country] || "Recommended: check your local official broadcaster";
+  return map[country] || `Detected country: ${country}. Check your local official broadcaster`;
 }
 async function openPlayer(id){
   const m = matches.find(x => x.id === id);
