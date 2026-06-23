@@ -357,16 +357,106 @@ function streamMessage(country){
 
   return map[country] || "Recommended: check your local official broadcaster";
 }
-async function openPlayer(id){const m=matches.find(x=>x.id===id),i=info(id),score=i.count?`⭐ ${i.avg.toFixed(1)} / 10`:"No ratings yet",votes=i.count===1?"1 vote":`${i.count} votes`;const country=await getVisitorCountry(),regionalMessage=streamMessage(country);document.getElementById("curtainHost").innerHTML=`<div class="split-curtain"><div class="split-flag" style="--flag-img:url('https://flagcdn.com/w1280/${m.homeCode}.png')"></div><div class="split-flag" style="--flag-img:url('https://flagcdn.com/w1280/${m.awayCode}.png')"></div><div class="split-divider"></div></div>`;document.getElementById("matchScreen").innerHTML=`<div class="match-head"><div><div class="match-title">${flagImg(m.homeCode,m.home,"match-flag-img")} ${m.home}<br><span class="vs" style="color:rgba(255,255,255,.75)">vs</span><br>${m.away} ${flagImg(m.awayCode,m.away,"match-flag-img")}</div><div class="match-meta">${m.competition} · Kickoff ${fmtTime(m.kickoffUtc)}</div><span class="badge">🛡 Spoiler-Free</span></div><button class="x" onclick="closePlayer()">×</button></div><button class="rating-reveal-btn" onclick="toggle('modalRating')">⭐ Reveal Community Rating</button><div id="modalRating" class="modal-rating-reveal"><span class="tag ${i.s.cls}">${i.s.label}</span><div class="score">${score}</div><div class="note">${votes}</div><p class="note">${i.s.detail}</p></div>${m.highlightsVideoId ? `<div class="tabs"><button class="active">${m.highlightsSource || "Highlights"}</button></div><div class="video-wrap"><iframe id="player" src="https://www.youtube.com/embed/${m.highlightsVideoId}" title="Spoiler-free football highlights" frameborder="0" allowfullscreen></iframe></div>` : `<div class="video-wrap" style="padding:24px;color:white;text-align:center">Highlights not available yet. Check back soon.</div>`}`;document.getElementById("playerOverlay").style.display="block"}
-function closePlayer(){document.getElementById("playerOverlay").style.display="none";document.getElementById("matchScreen").innerHTML="";document.getElementById("curtainHost").innerHTML=""}
-function closePlayerIfOutside(e){if(e.target.id==="playerOverlay")closePlayer()}
-function switchVideo(btn,id){document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));btn.classList.add("active");document.getElementById("player").src=`https://www.youtube.com/embed/${id}`}
-function openGuide(){document.getElementById("guideModal").style.display="flex"}
-function closeGuide(){document.getElementById("guideModal").style.display="none"}
-function closeGuideIfOutside(e){if(e.target.id==="guideModal")closeGuide()}
-document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeGuide();closePlayer()}})
+async function openPlayer(id){
+  const m = matches.find(x => x.id === id);
+  const i = info(id);
 
-render();
+  const score = i.count
+    ? `⭐ ${i.avg.toFixed(1)} / 10`
+    : "No ratings yet";
+
+  const votes = i.count === 1
+    ? "1 vote"
+    : `${i.count} votes`;
+
+  const country = await getVisitorCountry();
+  const regionalMessage = streamMessage(country);
+
+  document.getElementById("curtainHost").innerHTML = `
+    <div class="split-curtain">
+      <div class="split-flag" style="--flag-img:url('https://flagcdn.com/w1280/${m.homeCode}.png')"></div>
+      <div class="split-flag" style="--flag-img:url('https://flagcdn.com/w1280/${m.awayCode}.png')"></div>
+      <div class="split-divider"></div>
+    </div>
+  `;
+
+  document.getElementById("matchScreen").innerHTML = `
+    <div class="match-head">
+      <div>
+        <div class="match-title">
+          ${flagImg(m.homeCode,m.home,"match-flag-img")} ${m.home}<br>
+          <span class="vs" style="color:rgba(255,255,255,.75)">vs</span><br>
+          ${m.away} ${flagImg(m.awayCode,m.away,"match-flag-img")}
+        </div>
+        <div class="match-meta">${m.competition} · Kickoff ${fmtTime(m.kickoffUtc)}</div>
+        <span class="badge">🛡 Spoiler-Free</span>
+      </div>
+      <button class="x" onclick="closePlayer()">×</button>
+    </div>
+
+    <button class="rating-reveal-btn" onclick="toggle('modalRating')">⭐ Reveal Community Rating</button>
+
+    <div id="modalRating" class="modal-rating-reveal">
+      <span class="tag ${i.s.cls}">${i.s.label}</span>
+      <div class="score">${score}</div>
+      <div class="note">${votes}</div>
+      <p class="note">${i.s.detail}</p>
+    </div>
+
+    <div class="video-wrap" style="padding:10px 14px;color:white;text-align:center;background:#111827;border-radius:14px;margin-bottom:10px;font-size:14px">
+      ${regionalMessage}
+    </div>
+
+    ${
+      m.highlightsVideoId
+        ? `<div class="tabs">
+             <button class="active">${m.highlightsSource || "Highlights"}</button>
+           </div>
+           <div class="video-wrap">
+             <iframe id="player" src="https://www.youtube.com/embed/${m.highlightsVideoId}" title="Spoiler-free football highlights" frameborder="0" allowfullscreen></iframe>
+           </div>`
+        : `<div class="video-wrap" style="padding:24px;color:white;text-align:center">Highlights not available yet. Check back soon.</div>`
+    }
+  `;
+
+  document.getElementById("playerOverlay").style.display = "block";
+}
+
+function closePlayer(){
+  document.getElementById("playerOverlay").style.display = "none";
+  document.getElementById("matchScreen").innerHTML = "";
+  document.getElementById("curtainHost").innerHTML = "";
+}
+
+function closePlayerIfOutside(e){
+  if(e.target.id === "playerOverlay") closePlayer();
+}
+
+function switchVideo(btn,id){
+  document.querySelectorAll(".tabs button").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  document.getElementById("player").src = `https://www.youtube.com/embed/${id}`;
+}
+
+function openGuide(){
+  document.getElementById("guideModal").style.display = "flex";
+}
+
+function closeGuide(){
+  document.getElementById("guideModal").style.display = "none";
+}
+
+function closeGuideIfOutside(e){
+  if(e.target.id === "guideModal") closeGuide();
+}
+
+document.addEventListener("keydown", e => {
+  if(e.key === "Escape"){
+    closeGuide();
+    closePlayer();
+  }
+});
+
 loadSupabaseData().then(render);
 
 </script>
