@@ -208,7 +208,7 @@ async function supabaseFetch(path, options = {}) {
 
 async function loadSupabaseData() {
   try {
-    const dbMatches = await supabaseFetch("matches");
+    const dbMatches = await supabaseFetch("matches?select=*");
     matchDbIds = {};
     dbMatches.forEach(m => {
       if (m.slug) matchDbIds[m.slug] = m.id;
