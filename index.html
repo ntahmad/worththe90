@@ -986,10 +986,19 @@ async function openPlayer(id){
   country === "PK" ? m.pkVideoId :
   null;
 
-const videoId =
-  regionalVideoId ||
+const globalVideoId =
   m.fallbackVideoId ||
-  m.highlightsVideoId;
+  m.highlightsVideoId ||
+  m.seVideoId ||
+  m.nlVideoId ||
+  m.auVideoId ||
+  m.caVideoId ||
+  m.pkVideoId;
+
+const videoId =
+  country === "US"
+    ? (m.usVideoId || globalVideoId)
+    : (regionalVideoId || globalVideoId || m.usVideoId);
   document.getElementById("curtainHost").innerHTML = `
     <div class="split-curtain">
       <div class="split-flag" style="--flag-img:url('https://flagcdn.com/w1280/${m.homeCode}.png')"></div>
