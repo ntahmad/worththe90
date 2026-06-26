@@ -976,7 +976,7 @@ async function openPlayer(id){
 
   const country = await getVisitorCountry();
   const regionalMessage = streamMessage(country);
-  const videoId =
+  const regionalVideoId =
   country === "US" ? m.usVideoId :
   country === "GB" ? m.gbVideoId :
   country === "SE" ? m.seVideoId :
@@ -984,7 +984,12 @@ async function openPlayer(id){
   country === "AU" ? m.auVideoId :
   country === "CA" ? m.caVideoId :
   country === "PK" ? m.pkVideoId :
-  m.fallbackVideoId || m.highlightsVideoId;
+  null;
+
+const videoId =
+  regionalVideoId ||
+  m.fallbackVideoId ||
+  m.highlightsVideoId;
   document.getElementById("curtainHost").innerHTML = `
     <div class="split-curtain">
       <div class="split-flag" style="--flag-img:url('https://flagcdn.com/w1280/${m.homeCode}.png')"></div>
