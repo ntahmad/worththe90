@@ -1,0 +1,1260 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WorthThe90</title>
+<style>
+:root{
+  --bg:#f6f7fb;
+  --ink:#0f172a;
+  --muted:#64748b;
+  --line:#e5e7eb;
+  --card:#ffffff;
+  --red:#dc111d;
+  --red-dark:#9D2235;
+  --black:#050b12;
+  --shadow:0 18px 45px rgba(15,23,42,.10);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  background:radial-gradient(circle at top left,#fff 0,#f6f7fb 48%,#eef2f7 100%);
+  color:var(--ink);
+}
+button{
+  border:1px solid #cbd5e1;
+  background:#fff;
+  color:#111827;
+  border-radius:999px;
+  padding:10px 14px;
+  font-weight:850;
+  font-size:14px;
+  cursor:pointer;
+}
+
+/* Header */
+header{
+  position:sticky;
+  top:0;
+  z-index:20;
+  height:64px;
+  background:linear-gradient(180deg,#080e16,#05080d);
+  color:#fff;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  box-shadow:0 6px 24px rgba(0,0,0,.18);
+}
+.header-inner{
+  max-width:1500px;
+  height:64px;
+  margin:0 auto;
+  padding:0 28px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:0;
+}
+.logo-mark{
+  width:34px;
+  height:34px;
+  border-radius:999px;
+  display:grid;
+  place-items:center;
+  border:2px solid rgba(57,164,20,.85);
+  box-shadow:0 0 0 2px rgba(57,164,20,.10);
+  font-size:18px;
+}
+.brand h1{
+  margin:0;
+  font-size:27px;
+  letter-spacing:-.06em;
+  line-height:1;
+  white-space:nowrap;
+  display:flex;
+  align-items:baseline;
+  gap:2px;
+}
+.logo-main{color:#fff}
+.logo-number{color:var(--red)}
+.logo-small{color:#39a414!important;font-size:18px;font-weight:950;letter-spacing:-.04em;margin-right:0;text-shadow:0 0 12px rgba(57,164,20,.28)}
+.brand-subtitle{
+  border-left:1px solid rgba(255,255,255,.22);
+  padding-left:18px;
+  color:rgba(255,255,255,.84);
+  font-size:15px;
+  white-space:nowrap;
+}
+.header-tools{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:rgba(255,255,255,.9);
+  font-weight:850;
+}
+.region-pill,.moon-pill{
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.08);
+  color:#fff;
+}
+.region-pill{border-radius:999px;padding:9px 13px}
+.moon-pill{width:42px;height:42px;padding:0;display:grid;place-items:center}
+
+/* Layout */
+.container{
+  max-width:1500px;
+  margin:0 auto;
+  padding:36px 30px 80px;
+}
+.layout-with-calendar{
+  display:grid;
+  grid-template-columns:370px minmax(0,1fr);
+  gap:34px;
+  align-items:start;
+}
+.calendar-nav{
+  position:sticky;
+  top:82px;
+  align-self:start;
+}
+.matches-area{
+  min-width:0;
+  padding-top:4px;
+}
+.guide-float{
+  display:flex;
+  justify-content:flex-end;
+  margin-bottom:22px;
+  pointer-events:auto;
+}
+.guide-btn{
+  background:#fff;
+  color:var(--red-dark);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:13px 18px;
+  font-weight:950;
+  box-shadow:0 10px 24px rgba(15,23,42,.08);
+}
+
+/* Hanging calendar */
+.calendar-stack{display:grid;gap:12px}
+.calendar-paper{
+  width:100%;
+  position:relative;
+  background:#fbf6ee;
+  border-radius:22px;
+  border:1px solid rgba(15,23,42,.10);
+  box-shadow:0 18px 38px rgba(15,23,42,.14), inset 0 -8px 16px rgba(0,0,0,.035);
+  overflow:visible;
+}
+.calendar-paper::before,
+.calendar-paper::after{
+  content:"";
+  position:absolute;
+  top:-14px;
+  width:12px;
+  height:42px;
+  border-radius:999px;
+  background:linear-gradient(90deg,#7b838d,#f8fafc 44%,#555c65);
+  box-shadow:0 6px 10px rgba(0,0,0,.35);
+  z-index:3;
+}
+.calendar-paper::before{left:54px}
+.calendar-paper::after{right:54px}
+.ring-hole{
+  position:absolute;
+  top:11px;
+  width:27px;
+  height:27px;
+  border-radius:999px;
+  background:radial-gradient(circle,#111827 0 34%,#5b6470 36% 50%,rgba(0,0,0,.35) 53%,transparent 55%);
+  z-index:2;
+}
+.ring-hole.left{left:45px}
+.ring-hole.right{right:45px}
+.calendar-head{
+  height:74px;
+  border-radius:22px 22px 0 0;
+  background:
+    radial-gradient(circle at 90% 55%,rgba(255,255,255,.14) 0 18%,transparent 19%),
+    linear-gradient(180deg,#ef1723,#c70c18);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:27px;
+  font-weight:1000;
+  letter-spacing:.03em;
+  text-transform:uppercase;
+  text-shadow:0 2px 12px rgba(0,0,0,.25);
+}
+.calendar-body{
+  padding:13px 16px 17px;
+  background:radial-gradient(circle at 20% 0,rgba(255,255,255,.65),transparent 38%),#fbf6ee;
+  border-radius:0 0 22px 22px;
+}
+.calendar-grid{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:7px 6px;
+}
+.dow{
+  text-align:center;
+  color:#111827;
+  font-weight:950;
+  font-size:11px;
+  text-transform:uppercase;
+  padding-bottom:6px;
+  border-bottom:1px solid rgba(15,23,42,.08);
+}
+.calendar-empty{height:29px}
+.calendar-day{
+  height:29px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  border-radius:999px;
+  text-decoration:none;
+  color:#050b12;
+  font-size:17px;
+  font-weight:950;
+  letter-spacing:-.04em;
+  transition:transform .16s ease,background .16s ease,box-shadow .16s ease,color .16s ease;
+}
+.calendar-day:hover{
+  background:rgba(255,255,255,.75);
+  color:#111827;
+  transform:translateY(-1px);
+}
+.calendar-no-match{
+  color:#9aa4b2;
+  cursor:default;
+}
+.calendar-match::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:-1px;
+  transform:translateX(-50%);
+  width:5px;
+  height:5px;
+  background:var(--red);
+  border-radius:999px;
+}
+.calendar-selected{
+  background:var(--red)!important;
+  color:#fff!important;
+  box-shadow:0 0 0 5px rgba(220,17,29,.13),0 10px 20px rgba(220,17,29,.28);
+}
+.calendar-selected::after{background:#fff}
+.calendar-today:not(.calendar-selected){
+  box-shadow:inset 0 0 0 2px #16a34a;
+}
+.calendar-legend{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:7px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:10px 12px;
+  box-shadow:0 10px 22px rgba(15,23,42,.08);
+  overflow:hidden;
+}
+.legend-item{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  color:#111827;
+  font-weight:850;
+  font-size:11px;
+  white-space:nowrap;
+}
+.dot{width:9px;height:9px;border-radius:999px;display:inline-block;background:var(--red)}
+.dot.selected{width:16px;height:16px;border:4px solid #fff;background:var(--red);box-shadow:0 0 0 2px var(--red)}
+.dot.today{background:transparent;border:3px solid #16a34a;width:16px;height:16px}
+.dot.past{background:#cbd5e1}
+.stage-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:10px 12px;
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
+  gap:12px;
+  box-shadow:0 12px 26px rgba(15,23,42,.08);
+}
+.stage-icon{font-size:20px}
+.stage-title{font-weight:1000;color:#15803d;text-transform:uppercase}
+.stage-sub{color:#475569;margin-top:2px;font-size:12px}
+.stage-count{font-weight:850;color:#334155;font-size:13px}
+.stage-progress{grid-column:2/4;height:6px;background:#e5e7eb;border-radius:999px;overflow:hidden}
+.stage-progress span{display:block;height:100%;background:#16a34a;border-radius:999px}
+
+/* Date sections */
+.date{
+  font-size:42px;
+  letter-spacing:-.05em;
+  text-transform:uppercase;
+  color:#050b12;
+  margin:0 0 10px;
+  scroll-margin-top:92px;
+}
+.date-sub{
+  margin:0 0 22px;
+  color:#64748b;
+  font-size:16px;
+}
+.no-match-card{
+  background:rgba(255,255,255,.70);
+  border:1px dashed #cbd5e1;
+  border-radius:16px;
+  padding:22px;
+  color:#64748b;
+  font-weight:850;
+  margin-bottom:28px;
+}
+
+/* Match cards */
+.grid{
+  display:grid;
+  gap:20px;
+  margin-bottom:30px;
+}
+.card{
+  background:rgba(255,255,255,.92);
+  border:1px solid rgba(15,23,42,.08);
+  border-radius:16px;
+  padding:22px 20px 18px;
+  box-shadow:var(--shadow);
+  display:flex;
+  flex-direction:column;
+}
+.card-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:20px;
+  margin-bottom:20px;
+}
+.competition{
+  color:var(--red-dark);
+  font-size:16px;
+  font-weight:900;
+}
+.kickoff{
+  color:#64748b;
+  font-size:20px;
+  font-weight:900;
+  white-space:nowrap;
+}
+.teams{
+  display:grid;
+  grid-template-columns:1fr 64px 1fr;
+  align-items:center;
+  gap:18px;
+  margin:10px 0 20px;
+}
+.team-row{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  font-size:25px;
+  font-weight:950;
+  letter-spacing:-.04em;
+}
+.team-row.away{
+  justify-content:flex-end;
+  text-align:right;
+}
+.flag-img{
+  width:72px;
+  height:48px;
+  object-fit:cover;
+  border-radius:7px;
+  box-shadow:0 6px 16px rgba(15,23,42,.20);
+  flex:0 0 auto;
+  background:#fff;
+}
+.match-flag-img{
+  width:34px;
+  height:24px;
+  object-fit:cover;
+  border-radius:4px;
+  box-shadow:0 3px 12px rgba(0,0,0,.35);
+  vertical-align:-3px;
+  background:#fff;
+}
+.vs{
+  display:grid;
+  place-items:center;
+  width:54px;
+  height:54px;
+  border:1px solid rgba(255,255,255,.55);
+  border-radius:14px;
+  color:#fff;
+  font-size:15px;
+  font-weight:1000;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+  background:rgba(0,0,0,.78);
+  box-shadow:0 3px 12px rgba(0,0,0,.35);
+  text-shadow:none;
+  justify-self:center;
+}
+.actions{display:grid;gap:10px;margin-top:auto}
+.action{
+  width:100%;
+  border:1px solid var(--line);
+  background:#fff;
+  color:#111827;
+  border-radius:10px;
+  padding:13px 16px;
+  font-weight:950;
+  text-align:center;
+  font-size:16px;
+}
+.primary{
+  background:linear-gradient(180deg,#101923,#050b12);
+  color:#fff;
+  border-color:#050b12;
+}
+.hidden-box{display:none;margin-top:14px;padding:14px;border-radius:16px;background:#f8fafc;border:1px solid #e2e8f0}
+.hidden-box.visible{display:block}
+.tag{display:inline-block;padding:6px 10px;border-radius:999px;background:#eef4ff;color:#1e3a8a;font-weight:950;font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.tag.hot{background:#fff7ed;color:#c2410c}
+.tag.good{background:#ecfdf5;color:#047857}
+.tag.low{background:#f1f5f9;color:#475569}
+.score{font-size:30px;font-weight:950;letter-spacing:-.05em;margin:6px 0}
+.note{color:#64748b;line-height:1.35}
+.rate-buttons{display:grid;grid-template-columns:repeat(10,1fr);gap:7px;margin:12px 0}
+.rate-buttons button{border-radius:12px;padding:11px 0}
+.guide-link{color:#1d4ed8;text-decoration:underline;font-weight:850;cursor:pointer}
+.results{display:grid;gap:8px;margin-top:12px}
+.bar-row{display:grid;grid-template-columns:30px 1fr 42px;gap:8px;align-items:center;font-size:13px}
+.bar{height:9px;background:#e2e8f0;border-radius:999px;overflow:hidden}
+.bar div{height:100%;background:#111827}
+
+/* Player overlay */
+.overlay{position:fixed;inset:0;background:#000;display:none;z-index:50;overflow:auto}
+.split-curtain{position:fixed;inset:0;display:grid;grid-template-columns:1fr 1fr;z-index:0;pointer-events:none;background:#111}
+.split-flag{position:relative;overflow:hidden;background:#111}
+.split-flag::before{content:"";position:absolute;top:50%;left:50%;width:100vh;height:50vw;transform:translate(-50%,-50%) rotate(90deg);background-image:var(--flag-img);background-size:cover;background-position:center;background-repeat:no-repeat;filter:saturate(118%) contrast(105%)}
+.split-flag::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.18)}
+.split-curtain::after{content:"";position:fixed;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,rgba(0,0,0,.20) 0%,rgba(0,0,0,.48) 43%,rgba(0,0,0,.62) 50%,rgba(0,0,0,.48) 57%,rgba(0,0,0,.20) 100%)}
+.split-divider{display:none}
+.match-screen{position:relative;z-index:2;min-height:100dvh;padding:22px 16px;display:flex;align-items:center;justify-content:center}
+.match-inner{width:min(920px,94vw)}
+.match-head{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:start;color:#fff;margin-bottom:14px;text-shadow:0 2px 10px rgba(0,0,0,.55)}
+.match-details{display:flex;flex-direction:column;align-items:center;text-align:center}
+.match-title{font-size:34px;font-weight:1000;letter-spacing:-.05em;line-height:1.05}
+.match-title-grid{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;width:min(760px,100%);text-align:center}
+.match-title-team{display:flex;align-items:center;justify-content:center;gap:12px;min-width:0}
+.match-title-team.home,.match-title-team.away{justify-content:center;text-align:center}
+.match-title-team span{min-width:0;overflow-wrap:anywhere}
+.matchup-vs{display:inline-grid;place-items:center;background:#fff;color:#050b12;border:1px solid rgba(255,255,255,.9);border-radius:999px;padding:5px 14px;font-size:15px;font-weight:1000;letter-spacing:.08em;text-transform:uppercase;box-shadow:0 0 0 2px rgba(255,255,255,.16),0 6px 18px rgba(0,0,0,.55);text-shadow:none}
+.match-meta{margin-top:12px;font-weight:800;color:rgba(255,255,255,.88);text-align:center}
+.badge{display:inline-block;margin-top:10px;background:rgba(17,24,39,.72);border:1px solid rgba(255,255,255,.25);padding:7px 10px;border-radius:999px;font-weight:900}
+.x{width:42px;height:42px;border-radius:999px;background:#111827;color:#fff;border-color:#111827;font-size:25px;padding:0;box-shadow:0 10px 24px rgba(0,0,0,.28)}
+.float-card{background:rgba(255,255,255,.82);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.65);border-radius:20px;padding:16px;box-shadow:0 15px 35px rgba(0,0,0,.22);margin-bottom:14px}
+.float-card h3{margin:0 0 8px;font-size:13px;letter-spacing:.14em;color:#64748b}
+.rating-reveal-btn{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.86);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.65);box-shadow:0 10px 24px rgba(0,0,0,.20);margin-bottom:12px}
+.modal-rating-reveal{display:none;background:rgba(255,255,255,.86);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.65);border-radius:16px;padding:14px;margin-bottom:12px;box-shadow:0 10px 24px rgba(0,0,0,.20)}
+.modal-rating-reveal.visible{display:block}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.tabs button.active{background:#111827;color:#fff;border-color:#111827}
+.video-wrap{position:relative;width:100%;padding-top:56.25%;overflow:hidden;border-radius:18px;background:#000;box-shadow:0 12px 32px rgba(0,0,0,.35)}
+.video-wrap iframe,.video-wrap #player{position:absolute;inset:0;width:100%;height:100%}
+.youtube-fallback{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:linear-gradient(180deg,#111827,#050b12);color:#fff;text-align:center;padding:24px}
+.youtube-fallback h3{margin:0;font-size:22px;letter-spacing:-.03em}
+.youtube-fallback p{margin:0;color:rgba(255,255,255,.78);max-width:430px;line-height:1.35}
+.youtube-fallback a{display:inline-flex;align-items:center;gap:8px;margin-top:6px;background:#ff0000;color:#fff;text-decoration:none;border-radius:999px;padding:11px 18px;font-weight:950;box-shadow:0 8px 22px rgba(0,0,0,.35)}
+.fallback-icon{width:48px;height:48px;border-radius:999px;display:grid;place-items:center;background:#ff0000;font-size:24px;font-weight:1000}
+.region-banner{padding:10px 14px;color:white;text-align:center;background:#111827;border-radius:14px;margin-bottom:10px;font-size:14px;font-weight:850;box-shadow:0 10px 24px rgba(0,0,0,.22)}
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;align-items:center;justify-content:center;padding:16px;z-index:80}
+.modal{max-width:680px;width:100%;max-height:90vh;overflow:auto;background:#fff;border-radius:22px;padding:22px;position:relative}
+.close{position:absolute;top:12px;right:12px;background:#111827;color:#fff;border-color:#111827;width:38px;height:38px;padding:0;font-size:22px}
+.guide-list{display:grid;gap:10px;margin:16px 0}
+.guide-list div{display:grid;grid-template-columns:42px 1fr;gap:10px;line-height:1.35}
+.guide-list strong{font-size:20px}
+
+
+/* Dark mode */
+body.dark{
+  --bg:#070b11;
+  --ink:#e5e7eb;
+  --muted:#94a3b8;
+  --line:rgba(255,255,255,.10);
+  --card:#101722;
+  background:radial-gradient(circle at top left,#151e2d 0,#070b11 48%,#04070b 100%);
+  color:#e5e7eb;
+}
+body.dark .card,
+body.dark .calendar-legend,
+body.dark .stage-card,
+body.dark .guide-btn,
+body.dark .modal,
+body.dark .hidden-box,
+body.dark .no-match-card{
+  background:#101722;
+  border-color:rgba(255,255,255,.10);
+  color:#e5e7eb;
+}
+body.dark .calendar-paper{
+  background:#151b24;
+  border-color:rgba(255,255,255,.10);
+  box-shadow:0 18px 38px rgba(0,0,0,.36);
+}
+body.dark .calendar-body{
+  background:radial-gradient(circle at 20% 0,rgba(255,255,255,.06),transparent 38%),#151b24;
+}
+body.dark .calendar-day,
+body.dark .dow,
+body.dark .legend-item{
+  color:#e5e7eb;
+}
+body.dark .vs{
+  background:#fff;
+  color:#050b12;
+  border-color:#fff;
+  box-shadow:0 0 0 2px rgba(255,255,255,.18),0 4px 14px rgba(0,0,0,.55);
+}
+body.dark .matchup-vs{
+  background:#fff;
+  color:#050b12;
+  border-color:#fff;
+  box-shadow:0 0 0 2px rgba(255,255,255,.18),0 4px 14px rgba(0,0,0,.55);
+}
+body.dark .calendar-no-match{
+  color:#596579;
+}
+body.dark .calendar-day:hover{
+  background:rgba(255,255,255,.08);
+}
+body.dark .calendar-inactive,
+body.dark .date-sub,
+body.dark .note,
+body.dark .stage-sub{
+  color:#94a3b8;
+}
+body.dark .action,
+body.dark .rate-buttons button,
+body.dark .tabs button{
+  background:#0b111a;
+  border-color:rgba(255,255,255,.10);
+  color:#e5e7eb;
+}
+body.dark .primary,
+body.dark .tabs button.active{
+  background:#fff;
+  color:#050b12;
+  border-color:#fff;
+}
+body.dark .competition{
+  color:#ff6b75;
+}
+body.dark .kickoff{
+  color:#cbd5e1;
+}
+body.dark .date{
+  color:#f8fafc;
+}
+body.dark .bar{
+  background:#1f2937;
+}
+body.dark .bar div{
+  background:#e5e7eb;
+}
+
+@media(max-width:1180px){
+  .layout-with-calendar{grid-template-columns:330px minmax(0,1fr);gap:26px}
+  .calendar-head{font-size:24px}
+  .calendar-day{font-size:16px}
+  .calendar-legend{flex-wrap:wrap}
+}
+@media(max-width:900px){
+  .container{padding:22px 16px 70px}
+  .layout-with-calendar{display:block}
+  .calendar-nav{display:none}
+  .header-inner{padding:0 16px}
+  .brand-subtitle,.header-tools{display:none}
+  .guide-float{top:105px}
+  .teams{grid-template-columns:1fr;gap:10px}
+  .vs{width:44px;height:36px;justify-self:start}
+  .team-row.away{justify-content:flex-start;text-align:left}
+  .flag-img{width:48px;height:32px}
+  .date{font-size:30px}
+  .rate-buttons{grid-template-columns:repeat(5,1fr)}
+  .match-screen{align-items:center;padding:14px 10px}
+  .match-title{font-size:29px}
+  .match-title-grid{gap:8px;width:100%}
+  .match-title-team.home,.match-title-team.away{justify-content:center;text-align:center}
+  .matchup-vs{justify-self:center}
+  .float-card{padding:14px}
+  .match-inner{width:94vw}
+}
+@media(max-width:520px){
+  .match-title{font-size:28px}
+  .match-title-grid{gap:8px}
+  .match-title-team.home,.match-title-team.away{justify-content:center;text-align:center}
+  .matchup-vs{justify-self:center}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <div class="logo-mark">⚽</div>
+      <h1><span class="logo-small">is it</span><span class="logo-main">WorthThe<span class="logo-number">90?</span></span></h1>
+      <div class="brand-subtitle">See community ratings before deciding whether to watch the full match or the highlights.</div>
+    </div>
+    <div class="header-tools">
+      <button class="region-pill">🌐 Auto-detect</button>
+      <button class="moon-pill" id="themeToggle" onclick="toggleTheme()" title="Toggle dark mode">☾</button>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <div class="layout-with-calendar">
+    <aside id="calendarNav" class="calendar-nav"></aside>
+    <section class="matches-area">
+      <div class="guide-float"><button class="guide-btn" onclick="openGuide()">📊 Rating Guide</button></div>
+      <section id="home"></section>
+    </section>
+  </div>
+</main>
+
+<div class="overlay" id="playerOverlay" onclick="closePlayerIfOutside(event)">
+  <div id="curtainHost" onclick="closePlayer()"></div>
+  <section class="match-screen"
+    onclick="closePlayer()">
+    <div class="match-inner" id="matchScreen"
+      onclick="event.stopPropagation()"></div>
+  </section>
+</div>
+
+<div class="modal-backdrop" id="guideModal" onclick="closeGuideIfOutside(event)">
+  <div class="modal">
+    <button class="close" onclick="closeGuide()">×</button>
+    <h2>Football Match Rating Guide</h2>
+    <div class="guide-list">
+      <div><strong>10</strong><span>One of the best matches you've ever seen. Instant classic.</span></div>
+      <div><strong>9</strong><span>Outstanding. Fans should go out of their way to watch it.</span></div>
+      <div><strong>8</strong><span>Excellent match. Strong recommendation.</span></div>
+      <div><strong>7</strong><span>Good match. Worth your time.</span></div>
+      <div><strong>6</strong><span>Decent match. Some entertaining moments.</span></div>
+      <div><strong>5</strong><span>Average match. Not bad, not particularly memorable.</span></div>
+      <div><strong>4</strong><span>Below average. Highlights are probably enough.</span></div>
+      <div><strong>3</strong><span>Poor match. Little entertainment value.</span></div>
+      <div><strong>2</strong><span>Very poor match. Most fans should skip it.</span></div>
+      <div><strong>1</strong><span>Terrible match. Almost no redeeming value.</span></div>
+    </div>
+    <p class="note"><strong>Please rate the match itself, not the result or the team you support.</strong></p>
+  </div>
+</div>
+
+<script>
+
+const MIN_VOTES_FOR_SUGGESTION = 10;
+
+const SUPABASE_URL = "https://mccocwpxmxzdoabspimu.supabase.co";
+const SUPABASE_KEY = "sb_publishable_9M9IHFHShpkaoSlCmQa8nw_TQL8Au7M";
+const SUPABASE_HEADERS = {
+  apikey: SUPABASE_KEY,
+  Authorization: `Bearer ${SUPABASE_KEY}`,
+  "Content-Type": "application/json"
+};
+
+// Static display metadata for now. Supabase is the source of truth for ratings.
+// The "id" here matches the "slug" column in Supabase.
+let matches = [];
+
+let matchDbIds = {};
+let ratingCache = {};
+let supabaseReady = false;
+let activeCalendarDate = null;
+let dateObserver = null;
+
+function fmtDate(s){return new Intl.DateTimeFormat(undefined,{weekday:"short",month:"short",day:"numeric"}).format(new Date(s))}
+function fmtTime(s){return new Intl.DateTimeFormat(undefined,{hour:"2-digit",minute:"2-digit",hour12:false,timeZoneName:"short"}).format(new Date(s))}
+
+async function supabaseFetch(path, options = {}) {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+    ...options,
+    headers: { ...SUPABASE_HEADERS, ...(options.headers || {}) }
+  });
+  if (!res.ok) {
+    const msg = await res.text();
+    throw new Error(`Supabase error ${res.status}: ${msg}`);
+  }
+  const text = await res.text();
+  if (!text) return null;
+  return JSON.parse(text);
+}
+
+async function loadSupabaseData() {
+  try {
+    const dbMatches = await supabaseFetch("matches?select=*");
+    matchDbIds = {};
+    dbMatches.forEach(m => {
+      if (m.slug) matchDbIds[m.slug] = m.id;
+    });
+matches = [...new Map(dbMatches.map(m => [m.slug, {
+  id: m.slug,
+  kickoffUtc: m.kickoff_utc,
+  competition: m.competition,
+  home: m.home_team,
+  away: m.away_team,
+  homeCode: m.home_code,
+  awayCode: m.away_code,
+  highlightsUrl: m.highlights_url,
+  highlightsVideoId: m.highlights_video_id,
+  highlightsSource: m.highlights_source,
+
+  usVideoId: m.us_video_id,
+  gbVideoId: m.gb_video_id,
+  seVideoId: m.se_video_id,
+  nlVideoId: m.nl_video_id,
+  auVideoId: m.au_video_id,
+  caVideoId: m.ca_video_id,
+  pkVideoId: m.pk_video_id,
+  fallbackVideoId: m.fallback_video_id
+}])).values()];
+    matches.sort((a,b) => new Date(a.kickoffUtc) - new Date(b.kickoffUtc));
+    const dbRatings = await supabaseFetch("ratings?select=match_id,rating");
+    const idToSlug = Object.fromEntries(Object.entries(matchDbIds).map(([slug, id]) => [String(id), slug]));
+    ratingCache = {};
+    matches.forEach(m => ratingCache[m.id] = []);
+    dbRatings.forEach(r => {
+      const slug = idToSlug[String(r.match_id)];
+      if (slug) {
+        ratingCache[slug] ||= [];
+        ratingCache[slug].push(Number(r.rating));
+      }
+    });
+
+    supabaseReady = true;
+  } catch (err) {
+    console.error(err);
+    alert("Could not load Supabase ratings. Check the Supabase URL, publishable key, and RLS policies.");
+  }
+}
+
+function ratings(id){return ratingCache[id] || []}
+function avg(r){return r.length?r.reduce((a,b)=>a+b,0)/r.length:0}
+function suggestion(a,c){if(c<MIN_VOTES_FOR_SUGGESTION)return{label:"Not Enough Ratings",detail:`Suggestions appear after ${MIN_VOTES_FOR_SUGGESTION} ratings.`,cls:"low"}; if(a>=9)return{label:"Must Watch",detail:"Consider watching the full match before the highlights.",cls:"hot"}; if(a>=8)return{label:"Strongly Recommended",detail:"Consider watching the full match before the highlights.",cls:"hot"}; if(a>=6.5)return{label:"Worth Watching",detail:"Worth your time if you can fit in the full match.",cls:"good"}; if(a>=5)return{label:"Highlights Recommended",detail:"The highlights should be enough for most viewers.",cls:"low"}; return{label:"Skip It",detail:"Skip it unless you support one of the teams.",cls:"low"}}
+function info(id){const r=ratings(id),a=avg(r);return{ratings:r,count:r.length,avg:a,s:suggestion(a,r.length)}}
+function breakdown(id){const r=ratings(id),total=r.length,counts={};for(let i=1;i<=10;i++)counts[i]=0;r.forEach(n=>counts[n]++);return "<strong>Vote breakdown</strong>"+[10,9,8,7,6,5,4,3,2,1].map(n=>{const p=total?Math.round(counts[n]/total*100):0;return `<div class="bar-row"><span>${n}</span><div class="bar"><div style="width:${p}%"></div></div><strong>${p}%</strong></div>`}).join("")}
+function flagImg(code,name,cls="flag-img"){return `<img class="${cls}" src="https://flagcdn.com/w80/${code}.png" alt="${name} flag" loading="lazy">`}
+function spoilerSafeMatchTitle(m){return `${m.home} vs ${m.away}`}
+function card(m){
+  const i=info(m.id);
+  const score=i.count?`⭐ <strong>${i.avg.toFixed(1)} / 10</strong> · ${i.count} votes`:"No ratings yet";
+  const shortTime=fmtTime(m.kickoffUtc).replace(/\s?[A-Z]{2,5}$/,"");
+  return `<article class="card">
+    <div class="card-top">
+      <div class="competition">${m.competition}</div>
+      <div class="kickoff">${shortTime}</div>
+    </div>
+    <div class="teams">
+      <div class="team-row">${flagImg(m.homeCode,m.home)}<span>${m.home}</span></div>
+      <div class="vs">vs</div>
+      <div class="team-row away"><span>${m.away}</span>${flagImg(m.awayCode,m.away)}</div>
+    </div>
+    <div class="actions">
+      <button class="action primary" onclick="openPlayer('${m.id}')">▶ Watch Spoiler-Free</button>
+      <button class="action" onclick="toggle('rating-${m.id}')">📊 Reveal Community Rating</button>
+      <button class="action" onclick="toggle('vote-${m.id}')">🗳 Vote After Watching</button>
+    </div>
+    <div class="hidden-box" id="rating-${m.id}">
+      <span class="tag ${i.s.cls}">${i.s.label}</span>
+      <div class="score">${score}</div>
+      <p class="note">${i.s.detail}</p>
+    </div>
+    <div class="hidden-box" id="vote-${m.id}">
+      <strong>Rate the full match experience</strong>
+      <p class="note">Please rate the match itself, not the result or the team you support.</p>
+      <span class="guide-link" onclick="openGuide()">View rating guide</span>
+      <div class="rate-buttons">${[1,2,3,4,5,6,7,8,9,10].map(n=>`<button onclick="rate('${m.id}',${n})">${n}</button>`).join("")}</div>
+      <div class="results">${breakdown(m.id)}</div>
+    </div>
+  </article>`;
+}
+
+function dateIdFromUtc(utc){return "date-" + new Date(utc).toISOString().slice(0,10)}
+function isoFromUtc(utc){return new Date(utc).toISOString().slice(0,10)}
+function displayLongDate(iso){
+  return new Date(iso+"T12:00:00").toLocaleDateString(undefined,{weekday:"short",month:"long",day:"numeric",year:"numeric"}).toUpperCase();
+}
+function tournamentStageLabel(iso){
+  const d=new Date(iso+"T12:00:00");
+  if(d < new Date("2026-07-01T12:00:00")) return "GROUP STAGE";
+  return "KNOCKOUT STAGE";
+}
+function allMatchDates(){
+  return [...new Set(matches.map(m=>isoFromUtc(m.kickoffUtc)))].sort();
+}
+function calendarMonthInfo(baseIso){
+  const dates=allMatchDates();
+  const base=baseIso || dates[0] || new Date().toISOString().slice(0,10);
+  const month=new Date(base+"T12:00:00");
+  const year=month.getFullYear();
+  const monthIndex=month.getMonth();
+  const days=new Date(year,monthIndex+1,0).getDate();
+  return {dates,year,monthIndex,days};
+}
+function renderCalendar(){
+  const host=document.getElementById("calendarNav");
+  if(!host)return;
+
+  const dates=allMatchDates();
+  if(!dates.length){host.innerHTML="";return;}
+
+  if(!activeCalendarDate){
+    activeCalendarDate = location.hash?.startsWith("#date-") ? location.hash.replace("#date-","") : dates[0];
+  }
+
+  const selected = activeCalendarDate;
+  const {year,monthIndex,days}=calendarMonthInfo(selected);
+
+  const counts={};
+  dates.forEach(d=>counts[d]=matches.filter(m=>isoFromUtc(m.kickoffUtc)===d).length);
+
+  const todayIso=new Date().toISOString().slice(0,10);
+  const month=new Date(`${year}-${String(monthIndex+1).padStart(2,"0")}-01T12:00:00`);
+  const label=month.toLocaleDateString(undefined,{month:"long",year:"numeric"}).toUpperCase();
+  const first=new Date(year,monthIndex,1);
+  const start=(first.getDay()+6)%7; // Monday first
+  const dateSet=new Set(dates);
+
+  let h=`<div class="calendar-stack">
+    <div class="calendar-paper">
+      <span class="ring-hole left"></span>
+      <span class="ring-hole right"></span>
+      <div class="calendar-head">${label}</div>
+      <div class="calendar-body">
+        <div class="calendar-grid">`;
+
+  ["MON","TUE","WED","THU","FRI","SAT","SUN"].forEach(x=>h+=`<div class="dow">${x}</div>`);
+  for(let i=0;i<start;i++)h+=`<div class="calendar-empty"></div>`;
+
+  for(let d=1;d<=days;d++){
+    const iso=`${year}-${String(monthIndex+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+    const hasMatch=dateSet.has(iso);
+    const selectedClass=iso===selected ? "calendar-selected" : "";
+    const todayClass=iso===todayIso ? "calendar-today" : "";
+
+    if(hasMatch){
+      h+=`<a href="#date-${iso}" title="${counts[iso]} matches" class="calendar-day calendar-match ${selectedClass} ${todayClass}" onclick="activeCalendarDate='${iso}';setTimeout(renderCalendar,50)">${d}</a>`;
+    }else{
+      h+=`<span title="No matches scheduled" class="calendar-day calendar-no-match ${todayClass}">${d}</span>`;
+    }
+  }
+
+  const selectedIndex=Math.max(0,dates.indexOf(selected));
+  const stageIndex=selectedIndex+1;
+  const stagePct=Math.max(8,Math.round(stageIndex/dates.length*100));
+
+  h+=`</div>
+      </div>
+    </div>
+    <div class="calendar-legend">
+      <span class="legend-item"><i class="dot"></i> Match day</span>
+      <span class="legend-item"><i class="dot selected"></i> Selected</span>
+      <span class="legend-item"><i class="dot today"></i> Today</span>
+      <span class="legend-item"><i class="dot past"></i> Past</span>
+    </div>
+    <div class="stage-card">
+      <div class="stage-icon">🏆</div>
+      <div>
+        <div class="stage-title">${tournamentStageLabel(selected)}</div>
+        <div class="stage-sub">The journey begins</div>
+      </div>
+      <div class="stage-count">${stageIndex} / ${dates.length}</div>
+      <div class="stage-progress"><span style="width:${stagePct}%"></span></div>
+    </div>
+  </div>`;
+
+  host.innerHTML=h;
+}
+function observeDateSections(){
+  if(dateObserver) dateObserver.disconnect();
+
+  const headings=[...document.querySelectorAll("h2.date[id^='date-']")];
+  if(!headings.length)return;
+
+  dateObserver=new IntersectionObserver(entries=>{
+    const visible=entries
+      .filter(e=>e.isIntersecting)
+      .sort((a,b)=>a.boundingClientRect.top-b.boundingClientRect.top)[0];
+
+    if(visible){
+      const iso=visible.target.id.replace("date-","");
+      if(iso && iso!==activeCalendarDate){
+        activeCalendarDate=iso;
+        renderCalendar();
+      }
+    }
+  },{root:null,rootMargin:"-90px 0px -68% 0px",threshold:0});
+
+  headings.forEach(h=>dateObserver.observe(h));
+}
+function render(){
+  const grouped={};
+
+  matches
+    .slice()
+    .sort((a,b)=>new Date(a.kickoffUtc)-new Date(b.kickoffUtc))
+    .forEach(m=>{
+      const iso=isoFromUtc(m.kickoffUtc);
+      (grouped[iso] ||= []).push(m);
+    });
+
+  const dates=Object.keys(grouped).sort();
+
+  document.getElementById("home").innerHTML=dates.map(iso=>{
+    const items=grouped[iso];
+    return `<h2 class="date" id="date-${iso}">${displayLongDate(iso)}</h2><p class="date-sub">All times shown in your local time</p><div class="grid">${items.map(card).join("")}</div>`;
+  }).join("");
+
+  if(!activeCalendarDate && dates.length) activeCalendarDate=dates[0];
+  renderCalendar();
+  observeDateSections();
+}
+function toggle(id){document.getElementById(id).classList.toggle("visible")}
+
+async function rate(id,n){
+  if (!supabaseReady) {
+    alert("Ratings are still loading. Try again in a few seconds.");
+    return;
+  }
+
+  const matchId = matchDbIds[id];
+  if (!matchId) {
+    alert("This match is not linked to Supabase yet.");
+    return;
+  }
+const match = matches.find(m => m.id === id);
+
+if (match && new Date() < new Date(match.kickoffUtc)) {
+  alert("Voting opens after kickoff.");
+  return;
+}  
+  const voteKey = "worththe90_voted_" + id;
+
+if (localStorage.getItem(voteKey)) {
+  alert("You already voted on this match.");
+  return;
+}
+  try {
+    await supabaseFetch("ratings", {
+      method: "POST",
+      headers: { Prefer: "return=minimal" },
+      body: JSON.stringify({ match_id: matchId, rating: n })
+    });
+localStorage.setItem(voteKey, "1");
+    await loadSupabaseData();
+    render();
+
+    setTimeout(()=>{
+      document.getElementById("vote-"+id)?.classList.add("visible");
+      document.getElementById("rating-"+id)?.classList.add("visible");
+    },0);
+  } catch (err) {
+    console.error(err);
+    alert("Could not save rating. Check Supabase insert policy/RLS.");
+  }
+}
+function closePlayerIfOutside(e){if(e.target.id==="playerOverlay")closePlayer()}
+async function getVisitorCountry(){
+  try{
+    const res = await fetch("https://worththe90-geo.zetahir1897.workers.dev");
+    const data = await res.json();
+    return data.country || "XX";
+  }catch(e){
+    console.error("Could not detect country", e);
+    return "XX";
+  }
+}
+
+function streamMessage(country, firstOption){
+  const normalizedCountry = (country || "XX").toUpperCase();
+
+  const map = {
+    US: "Recommended in your region: FOX Sports / official US coverage",
+    GB: "Recommended in your region: BBC Football",
+    SE: "Recommended in your region: SVT",
+    NL: "Recommended in your region: NOS Sport",
+    AU: "Recommended in your region: SBS Sport",
+    CA: "Recommended in your region: TSN / CTV coverage",
+    PK: "Recommended in your region: tapmad"
+  };
+
+  if (firstOption) {
+    return map[normalizedCountry] || `Recommended video source: ${firstOption.label}`;
+  }
+
+  return map[normalizedCountry] || `Detected country: ${normalizedCountry}. Check your local official broadcaster`;
+}
+
+const VIDEO_SOURCES = [
+  { country: "US", label: "FOX Sports", field: "usVideoId" },
+  { country: "GB", label: "BBC Football", field: "gbVideoId" },
+  { country: "SE", label: "SVT", field: "seVideoId" },
+  { country: "NL", label: "NOS Sport", field: "nlVideoId" },
+  { country: "AU", label: "SBS Sport", field: "auVideoId" },
+  { country: "CA", label: "TSN", field: "caVideoId" },
+  { country: "PK", label: "tapmad", field: "pkVideoId" }
+];
+
+
+let youtubeApiPromise = null;
+let activeYouTubePlayer = null;
+
+function loadYouTubeApi(){
+  if (window.YT && window.YT.Player) return Promise.resolve();
+  if (youtubeApiPromise) return youtubeApiPromise;
+
+  youtubeApiPromise = new Promise((resolve) => {
+    const previous = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = function(){
+      if (typeof previous === "function") previous();
+      resolve();
+    };
+
+    if (!document.querySelector('script[src="https://www.youtube.com/iframe_api"]')) {
+      const tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+      document.head.appendChild(tag);
+    }
+  });
+
+  return youtubeApiPromise;
+}
+
+function renderYouTubeFallback(videoId){
+  const wrapper = document.getElementById("playerWrapper");
+  if (!wrapper) return;
+
+  const safeId = encodeURIComponent(videoId);
+  wrapper.innerHTML = `
+    <div class="youtube-fallback">
+      <div class="fallback-icon">▶</div>
+      <h3>Playback is blocked here</h3>
+      <p>This official highlight cannot play inside this page.</p>
+      <a href="https://www.youtube.com/watch?v=${safeId}" target="_blank" rel="noopener">Watch on YouTube</a>
+    </div>
+  `;
+}
+
+async function initYouTubePlayer(videoId){
+  try {
+    await loadYouTubeApi();
+    if (!document.getElementById("player")) return;
+
+    if (activeYouTubePlayer && typeof activeYouTubePlayer.destroy === "function") {
+      activeYouTubePlayer.destroy();
+    }
+
+    activeYouTubePlayer = new YT.Player("player", {
+      width: "100%",
+      height: "100%",
+      videoId,
+      playerVars: {
+        autoplay: 1,
+        playsinline: 1,
+        rel: 0,
+        modestbranding: 1
+      },
+      events: {
+        onReady: (event) => {
+          try { event.target.playVideo(); } catch (_) {}
+        },
+        onError: (event) => {
+          if (event.data === 101 || event.data === 150) {
+            renderYouTubeFallback(videoId);
+          }
+        }
+      }
+    });
+  } catch (err) {
+    console.error("Could not load YouTube player", err);
+    renderYouTubeFallback(videoId);
+  }
+}
+
+function youtubeEmbedUrl(videoId){
+  return `https://www.youtube.com/embed/${videoId}?autoplay=1&playsinline=1&rel=0&modestbranding=1`;
+}
+
+function getVideoOptions(m, country){
+  const normalizedCountry = (country || "XX").toUpperCase();
+  const preferred = VIDEO_SOURCES.find(s => s.country === normalizedCountry);
+  const orderedSources = [
+    ...(preferred ? [preferred] : []),
+    ...VIDEO_SOURCES.filter(s => s.country !== normalizedCountry)
+  ];
+
+  const seen = new Set();
+  const options = [];
+
+  for (const source of orderedSources) {
+    const id = m[source.field];
+    if (id && !seen.has(id)) {
+      options.push({ id, label: source.label, country: source.country });
+      seen.add(id);
+    }
+  }
+
+  const fallbackItems = [
+    { id: m.fallbackVideoId, label: "Fallback highlights" },
+    { id: m.highlightsVideoId, label: m.highlightsSource || "Highlights" }
+  ];
+
+  for (const item of fallbackItems) {
+    if (item.id && !seen.has(item.id)) {
+      options.push(item);
+      seen.add(item.id);
+    }
+  }
+
+  return options;
+}
+async function openPlayer(id){
+  const m = matches.find(x => x.id === id);
+  const i = info(id);
+
+  const score = i.count
+    ? `⭐ ${i.avg.toFixed(1)} / 10`
+    : "No ratings yet";
+
+  const votes = i.count === 1
+    ? "1 vote"
+    : `${i.count} votes`;
+
+  const country = (await getVisitorCountry()).toUpperCase();
+  const videoOptions = getVideoOptions(m, country);
+  const videoId = videoOptions[0]?.id;
+  const regionalMessage = streamMessage(country, videoOptions[0]);
+  document.getElementById("curtainHost").innerHTML = `
+    <div class="split-curtain">
+      <div class="split-flag" style="--flag-img:url('https://flagcdn.com/w1280/${m.homeCode}.png')"></div>
+      <div class="split-flag" style="--flag-img:url('https://flagcdn.com/w1280/${m.awayCode}.png')"></div>
+      <div class="split-divider"></div>
+    </div>
+  `;
+
+  document.getElementById("matchScreen").innerHTML = `
+    <div class="match-head">
+      <div class="match-details">
+        <div class="match-title match-title-grid">
+          <div class="match-title-team home">${flagImg(m.homeCode,m.home,"match-flag-img")} <span>${m.home}</span></div>
+          <span class="matchup-vs">vs</span>
+          <div class="match-title-team away">${flagImg(m.awayCode,m.away,"match-flag-img")} <span>${m.away}</span></div>
+        </div>
+        <div class="match-meta">${m.competition} · Kickoff ${fmtTime(m.kickoffUtc)}</div>
+        <span class="badge">🛡 Spoiler-Free</span>
+      </div>
+      <button class="x" onclick="closePlayer()">×</button>
+    </div>
+
+    <button class="rating-reveal-btn" onclick="toggle('modalRating')">⭐ Reveal Community Rating</button>
+
+    <div id="modalRating" class="modal-rating-reveal">
+      <span class="tag ${i.s.cls}">${i.s.label}</span>
+      <div class="score">${score}</div>
+      <div class="note">${votes}</div>
+      <p class="note">${i.s.detail}</p>
+    </div>
+
+    <div class="region-banner">
+      ${regionalMessage}
+    </div>
+
+    ${
+      videoId
+        ? `<div class="video-wrap" id="playerWrapper">
+             <div id="player"></div>
+           </div>`
+        : `<div class="video-wrap" style="padding:24px;color:white;text-align:center">Highlights not available yet. Check back soon.</div>`
+    }
+  `;
+
+  document.getElementById("playerOverlay").style.display = "block";
+  if (videoId) initYouTubePlayer(videoId);
+}
+
+function closePlayer(){
+  if (activeYouTubePlayer && typeof activeYouTubePlayer.destroy === "function") {
+    try { activeYouTubePlayer.destroy(); } catch (_) {}
+    activeYouTubePlayer = null;
+  }
+  document.getElementById("playerOverlay").style.display = "none";
+  document.getElementById("matchScreen").innerHTML = "";
+  document.getElementById("curtainHost").innerHTML = "";
+}
+
+function closePlayerIfOutside(e){
+  if(e.target.id === "playerOverlay") closePlayer();
+}
+
+function switchVideo(btn,id){
+  document.querySelectorAll(".tabs button").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  const wrapper = document.getElementById("playerWrapper");
+  if (wrapper) wrapper.innerHTML = '<div id="player"></div>';
+  initYouTubePlayer(id);
+}
+
+function openGuide(){
+  document.getElementById("guideModal").style.display = "flex";
+}
+
+function closeGuide(){
+  document.getElementById("guideModal").style.display = "none";
+}
+
+function closeGuideIfOutside(e){
+  if(e.target.id === "guideModal") closeGuide();
+}
+
+document.addEventListener("keydown", e => {
+  if(e.key === "Escape"){
+    closeGuide();
+    closePlayer();
+  }
+});
+window.addEventListener("hashchange",()=>{if(location.hash?.startsWith('#date-')) activeCalendarDate=location.hash.replace('#date-',''); renderCalendar();});
+
+
+function applyTheme(){
+  const theme=localStorage.getItem("worththe90_theme") || "light";
+  document.body.classList.toggle("dark", theme==="dark");
+  const btn=document.getElementById("themeToggle");
+  if(btn) btn.textContent = theme==="dark" ? "☀" : "☾";
+}
+function toggleTheme(){
+  const isDark=document.body.classList.contains("dark");
+  localStorage.setItem("worththe90_theme", isDark ? "light" : "dark");
+  applyTheme();
+}
+applyTheme();
+
+loadSupabaseData().then(render);
+
+</script>
+</body>
+</html>
