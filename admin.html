@@ -58,7 +58,6 @@ const SUPABASE_HEADERS = { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABA
 const REGION_FIELDS = [
   { key:"us_video_id", label:"US", source:"FOX Sports" },
   { key:"gb_video_id", label:"GB", source:"BBC Football" },
-  { key:"se_video_id", label:"SE", source:"SVT" },
   { key:"nl_video_id", label:"NL", source:"NOS Sport" },
   { key:"au_video_id", label:"AU", source:"SBS Sport" },
   { key:"ca_video_id", label:"CA", source:"TSN" },
@@ -91,7 +90,7 @@ async function logout(){ localStorage.removeItem("w90_admin_session"); session=n
 function authHeader(){ return session?.access_token ? { Authorization:`Bearer ${session.access_token}` } : {}; }
 async function bootAdmin(){ document.getElementById("loginCard").style.display="none"; document.getElementById("adminApp").classList.remove("hidden"); document.getElementById("logoutBtn").style.display="inline-block"; await loadMatches(); }
 async function loadMatches(){
-  const select="id,slug,home_team,away_team,competition,kickoff_utc,us_video_id,gb_video_id,se_video_id,nl_video_id,au_video_id,ca_video_id,pk_video_id,fallback_video_id";
+  const select="id,slug,home_team,away_team,competition,kickoff_utc,us_video_id,gb_video_id,nl_video_id,au_video_id,ca_video_id,pk_video_id,fallback_video_id";
   matches=await api(`/rest/v1/matches?select=${select}&order=kickoff_utc.asc`);
   document.getElementById("matchCount").textContent=`${matches.length} matches`;
   renderMatches();
