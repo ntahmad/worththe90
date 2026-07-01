@@ -1222,7 +1222,7 @@ function startSpoilerShieldBehavior(){
 
   spoilerShieldInitialTimer = setTimeout(() => {
     hideSpoilerShield();
-  }, 13000);
+  }, 20000);
 
   if (spoilerShieldMouseHandler) {
     document.removeEventListener("mousemove", spoilerShieldMouseHandler);
@@ -1245,7 +1245,7 @@ function startSpoilerShieldBehavior(){
     spoilerShieldIdleTimer = setTimeout(() => {
       shield.style.transition = "opacity .75s ease";
       hideSpoilerShield();
-    }, 5000);
+    }, 10000);
   };
 
   document.addEventListener("mousemove", spoilerShieldMouseHandler);
@@ -1484,6 +1484,16 @@ function toggleSafeFullscreen(){
 document.addEventListener("fullscreenchange", () => {
   const btn = document.getElementById("safeFullscreenBtn");
   if (btn) btn.textContent = document.fullscreenElement ? "Exit Fullscreen" : "🛡 Spoiler-Safe Fullscreen";
+
+  if (document.fullscreenElement) {
+    showSpoilerShield();
+
+    if (spoilerShieldIdleTimer) clearTimeout(spoilerShieldIdleTimer);
+
+    spoilerShieldIdleTimer = setTimeout(() => {
+      hideSpoilerShield();
+    }, 10000);
+  }
 });
 
 function switchVideo(btn,id){
