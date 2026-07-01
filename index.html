@@ -1226,6 +1226,7 @@ function startSpoilerShieldBehavior(){
 
   if (spoilerShieldMouseHandler) {
     document.removeEventListener("mousemove", spoilerShieldMouseHandler);
+    document.getElementById("playerWrapper")?.removeEventListener("mousemove", spoilerShieldMouseHandler);
   }
 
   spoilerShieldMouseHandler = () => {
@@ -1234,31 +1235,32 @@ function startSpoilerShieldBehavior(){
     const shield = getSpoilerShield();
     if (!shield) return;
 
-    // Reappear instantly on mouse movement.
     shield.style.transition = "none";
     shield.classList.remove("is-hidden");
+    shield.style.opacity = "1";
     void shield.offsetHeight;
 
-    // Keep the fade-out smooth after the mouse stops moving.
-    shield.style.transition = "opacity .75s ease";
-
     if (spoilerShieldIdleTimer) clearTimeout(spoilerShieldIdleTimer);
+
     spoilerShieldIdleTimer = setTimeout(() => {
+      shield.style.transition = "opacity .75s ease";
       hideSpoilerShield();
     }, 5000);
   };
 
   document.addEventListener("mousemove", spoilerShieldMouseHandler);
+  document.getElementById("playerWrapper")?.addEventListener("mousemove", spoilerShieldMouseHandler);
 }
 
 function stopSpoilerShieldBehavior(){
   clearSpoilerShieldTimers();
+
   if (spoilerShieldMouseHandler) {
     document.removeEventListener("mousemove", spoilerShieldMouseHandler);
+    document.getElementById("playerWrapper")?.removeEventListener("mousemove", spoilerShieldMouseHandler);
     spoilerShieldMouseHandler = null;
   }
 }
-
 
 function loadYouTubeApi(){
   if (window.YT && window.YT.Player) return Promise.resolve();
