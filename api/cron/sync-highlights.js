@@ -5,7 +5,7 @@ export default async function handler(req, res) {
       Authorization: `Bearer ${process.env.SUPABASE_ANON_KEY}`
     };
 
-    // 1) First update matches/bracket from ESPN
+    // 1) Update matches/bracket from ESPN
     const matchesResponse = await fetch(
       "https://mccocwpxmxzdoabspimu.supabase.co/functions/v1/sync-matches",
       {
@@ -18,7 +18,7 @@ export default async function handler(req, res) {
     const matchesText = await matchesResponse.text();
     console.log("sync-matches:", matchesText);
 
-    // 2) Normal recent/current highlights sync
+    // 2) Normal highlights sync
     const highlightsResponse = await fetch(
       "https://mccocwpxmxzdoabspimu.supabase.co/functions/v1/sync-highlights",
       {
@@ -32,7 +32,7 @@ export default async function handler(req, res) {
 
     const highlightsData = await highlightsResponse.json();
 
-    // 3) Tiny quota-safe backfill pass
+    // 3) Automatic small backfill
     const backfillResponse = await fetch(
       "https://mccocwpxmxzdoabspimu.supabase.co/functions/v1/sync-highlights",
       {
@@ -41,8 +41,8 @@ export default async function handler(req, res) {
         body: JSON.stringify({
           dryRun: false,
           backfillMissing: true,
-          limit: 3,
-          maxSearchApiCalls: 2
+          limit: 5,
+          maxSearchApiCalls: 3
         })
       }
     );
